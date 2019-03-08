@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const morgan = require('morgan');
 const express = require('express');
 const calcsRouter = require('./routes/calcs');
 
@@ -8,14 +9,10 @@ const env = process.env.NODE_ENV || 'development';
 const app = express();
 
 // ----- Middlewares -----
+app.use(morgan(':method - :url - :status'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
-
-app.use((req, _, next) => {
-  console.log(`${req.method} ${req.path} - ${req.ip}`);
-  next();
-});
 // ----- Middlewares -----
 
 
