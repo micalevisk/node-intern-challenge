@@ -23,13 +23,15 @@ const fat = (function fat() {
   }
 }());
 
-router.post('/fat', (req, res) => {
-  const {n} = req.body;
-
-  if (!n) {
-    res.sendStatus(400);
+router.post('/fat', [
+  check('n').isNumeric()
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
   }
 
+  const { n } = req.body;
   res.json({result: fat(n)});
 });
 
