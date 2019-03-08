@@ -1,7 +1,8 @@
 const bodyParser = require('body-parser');
+const express = require('express');
 const expressValidator = require('express-validator');
 const morgan = require('morgan');
-const express = require('express');
+
 const calcsRouter = require('./routes/calcs');
 
 const env = process.env.NODE_ENV || 'development';
