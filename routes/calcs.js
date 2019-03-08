@@ -52,4 +52,16 @@ router.post('/fat', [
   res.json({result: fat(n)});
 });
 
+router.post('/fib', [
+  check('n').isNumeric()
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  const { n } = req.body;
+  res.json({result: fib(n)});
+});
+
 module.exports = router;
