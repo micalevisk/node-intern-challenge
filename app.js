@@ -11,6 +11,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
+
+app.use((req, _, next) => {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
 // ----- Middlewares -----
 
 
