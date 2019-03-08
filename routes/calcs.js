@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { check, validationResult } = require('express-validator/check');
 
 /**
  * Calcula o fatorial de um número natural.

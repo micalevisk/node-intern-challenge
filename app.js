@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const express = require('express');
 const calcsRouter = require('./routes/calcs');
 
@@ -9,6 +10,7 @@ const app = express();
 // ----- Middlewares -----
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressValidator())
 // ----- Middlewares -----
 
 
