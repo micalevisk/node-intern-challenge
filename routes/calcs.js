@@ -23,6 +23,23 @@ const fat = (function fat() {
   }
 }());
 
+/**
+ * Calcula o fibonacci (com sementes 0 e 1) de um número natural.
+ * Se o número passado não for um inteiro positivo,
+ * o erro `RangeError` é lançado.
+ * @param {number} n O número alvo da computação.
+ * @returns {number} O n-ésimo número da sequência de Fibonacci.
+ */
+function fib (n) {
+  if (n < 0 || !Number.isInteger(n)) {
+    throw RangeError(`O valor passado ('${n}') é negativo ou não inteiro.`);
+  }
+
+  if (n < 2) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+
 router.post('/fat', [
   check('n').isNumeric()
 ], (req, res) => {
