@@ -3,8 +3,7 @@ const { check, validationResult } = require('express-validator/check');
 
 /**
  * Calcula o fatorial de um número natural.
- * Se o número passado não for um inteiro positivo,
- * o erro `RangeError` é lançado.
+ * Não valida o valor passado.
  * @param {number} n O número alvo da computação.
  * @returns {number} O fatorial de `n`.
  */
@@ -13,10 +12,6 @@ const fat = (function fat() {
   return calcFatComMemoizacao;
 
   function calcFatComMemoizacao(n) {
-    if (n < 0 || !Number.isInteger(n)) {
-      throw RangeError(`O valor passado ('${n}') é negativo ou não inteiro.`);
-    }
-
     return (valoresComputados[n])
          ? valoresComputados[n]
          : valoresComputados[n] = n * calcFatComMemoizacao(n - 1);
