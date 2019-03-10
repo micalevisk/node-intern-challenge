@@ -4,7 +4,7 @@ const expressValidator = require('express-validator');
 const morgan = require('morgan');
 
 const calcsRouter = require('./routes/calcs');
-const database = require('./db');
+const db = require('./db');
 
 const env = process.env.NODE_ENV || 'development';
 
