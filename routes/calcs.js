@@ -30,13 +30,22 @@ const fat = (function fat() {
  * @param {number} n O número alvo da computação.
  * @returns {number} O n-ésimo número da sequência de Fibonacci.
  */
-function fib (n) {
+function fib(n) {
   if (n < 0 || !Number.isInteger(n)) {
     throw RangeError(`O valor passado ('${n}') é negativo ou não inteiro.`);
   }
 
-  if (n < 2) return n;
-  return fib(n - 1) + fib(n - 2);
+  let anterior = 0, corrente = 1;
+  for (let i=1; i < n; ++i)
+    [
+      corrente,
+      anterior
+    ] = [
+      corrente + anterior,
+      corrente
+    ];
+
+  return corrente;
 }
 
 
@@ -65,5 +74,6 @@ router.post('/fib', [
   const { n } = req.body;
   res.json({result: fib(n)});
 });
+
 
 module.exports = router;
