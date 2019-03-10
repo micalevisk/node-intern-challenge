@@ -44,7 +44,7 @@ curl -X POST http://localhost:7777/calcs/fib -H 'Content-Type: application/json'
 **GET** `/api/livros` | Retorna um JSON com todos os livros cadastrados.
 **GET** `/api/livros/{id}` | Retorna um JSON que representa o livro com o id solicitado.
 **POST** `/api/livros` | Dado um número `id` e uma string `nome` no _body_ da requisição, cadastra um novo livro no BD e retorna um JSON indicando sucesso.
-**PUT** `/api/livros/{id}?return_new={false|true}` | Dado um número `id` e/ou uma string `nome` no _body_ da requisição, atualiza o livro identificado por `id` (da URL) e retorna o JSON que o representa. A query string `return_new` é `false` por padrão. Se `true`, o livro atualizado será retornado.
+**PUT** `/api/livros/{id}?return_new={false,true}` | Dado um número `id` e/ou uma string `nome` no _body_ da requisição, atualiza o livro identificado por `id` (da URL) e retorna o JSON que o representa. A query string `return_new` é `false` por padrão. Se `true`, o livro atualizado será retornado.
 **DELETE** `/api/livros/{id}` | Retorna um JSON com informações sobre o registro (livro) removido, dado seu `id`.
 
 ### Iniciar o servidor e configurar o Banco de Dados
@@ -87,6 +87,6 @@ curl -X GET 'http://localhost:7777/api/livros/123'
 ## CR[U]D ~ atualizar o nome livro que tem o `id` 123, retornando o novo registro
 curl -X PUT 'http://localhost:7777/api/livros/123?return_new=true' -H 'content-type: application/json' -d '{"nome": "bar" }'
 
-## CRU[D] ~ remover o livro que tem o ´id` 123
+## CRU[D] ~ remover o livro que tem o `id` 123
 curl -X DELETE 'http://localhost:7777/api/livros/123'
 ```
