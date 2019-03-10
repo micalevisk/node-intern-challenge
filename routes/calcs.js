@@ -39,17 +39,23 @@ function fib(n) {
   return corrente;
 }
 
-
-router.post('/fat', [
-  check('n')
-    .isInt({ min: 0, max: 170 })
-    .withMessage(`O número deve ser um natural menor ou igual a 170`)
-], (req, res) => {
+//#region [remove] middleware de verificação de parâmetros; válido deixar em um dir. `middlewares`
+const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
 
+  next();
+};
+//#endregion
+
+router.post('/fat', [
+  check('n')
+    .isInt({ min: 0, max: 170 })
+    .withMessage(`O número deve ser um natural menor ou igual a 170`),
+  validateRequest,
+], (req, res) => {
   const { n } = req.body;
   res.json({result: fat(n)});
 });
@@ -57,13 +63,9 @@ router.post('/fat', [
 router.post('/fib', [
   check('n')
     .isInt({ min: 0, max: 1476 })
-    .withMessage(`O número deve ser um natural menor ou igual a 1476`)
+    .withMessage(`O número deve ser um natural menor ou igual a 1476`),
+  validateRequest,
 ], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
   const { n } = req.body;
   res.json({result: fib(n)});
 });
