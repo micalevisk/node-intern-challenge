@@ -3,8 +3,8 @@ const express = require('express');
 const expressValidator = require('express-validator');
 const morgan = require('morgan');
 
-const calcsRouter = require('./routes/calcs');
 const db = require('./db');
+const routes = require('./routes');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -27,7 +27,7 @@ app.get('/hello', (req, res) => {
   res.status(200).send({message: 'hello world'});
 });
 
-app.use('/calcs', calcsRouter);
+app.use(routes);
 // ----- Routes -----
 
 
