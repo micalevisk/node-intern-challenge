@@ -41,7 +41,9 @@ function fib (n) {
 
 
 router.post('/fat', [
-  check('n').isNumeric()
+  check('n')
+    .isInt({ max: 170 })
+    .withMessage(`O número deve ser um natural menor ou igual a 170`)
 ], (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
