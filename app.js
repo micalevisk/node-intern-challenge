@@ -4,10 +4,15 @@ const expressValidator = require('express-validator');
 const morgan = require('morgan');
 
 const calcsRouter = require('./routes/calcs');
+const database = require('./db');
 
 const env = process.env.NODE_ENV || 'development';
 
 const app = express();
+
+// ----- Database Connection -----
+db.connect();
+// ----- Database Connection -----
 
 // ----- Middlewares -----
 app.use(morgan(':method - :url - :status'));
