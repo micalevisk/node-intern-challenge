@@ -56,8 +56,8 @@ exports.removeById = async function (req, res, next) {
   // TODO: validar parâmetros
 
   try {
-    const livroRemovido = LivrosDAL.removeById(id);
-    if (livroRemovido) return res.status(200).json(livroRemovido)
+    const livroRemovido = await LivrosDAL.removeById(id);
+    if (livroRemovido) return res.status(200).json(livroRemovido);
 
     throw Error(`O livro com id '${id}' não foi encontrado`);
   } catch (error) {
