@@ -64,5 +64,6 @@ function connect(strURI) {
 module.exports = {
   Schema: mongoose.Schema,
   ModelFactory: mongoose.model,
+  isConnected: () => mongoose.connection.readyState == 1,
   connect: connect.bind(null, URI),
 }
