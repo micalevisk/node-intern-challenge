@@ -76,7 +76,7 @@ mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
 docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
 
 # [2] (se existir uma instância local do mongodb) iniciar servidor com o nodemon
-docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee /usr/local/bin/yarn develop
+docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee yarn develop
 # [3] (caso contrário) iniciar servidor usando o DB remoto
 docker run -e DB_USERNAME='madmin' -e DB_PASSWORD='madmin67' --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
 ## ... em modo interativo para a visualização dos logs das requisições
