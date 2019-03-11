@@ -37,19 +37,9 @@ curl -X POST http://localhost:7777/calcs/fib -H 'Content-Type: application/json'
 
 ## Resultados
 
-### Descrição da API
-
-| endpoint | descrição |
-|:---------|:----------|
-**GET** `/api/livros` | Retorna um JSON com todos os livros cadastrados.
-**GET** `/api/livros/{id}` | Retorna um JSON que representa o livro com o id solicitado.
-**POST** `/api/livros` | Dado um número `id` e uma string `nome` no _body_ da requisição, cadastra um novo livro no BD e retorna um JSON indicando sucesso.
-**PUT** `/api/livros/{id}?return_new={false,true}` | Dado um número `id` e/ou uma string `nome` no _body_ da requisição, atualiza o livro identificado por `id` (da URL) e retorna o JSON que o representa. A query string `return_new` é `false` por padrão. Se `true`, o livro atualizado será retornado.
-**DELETE** `/api/livros/{id}` | Retorna um JSON com informações sobre o registro (livro) removido, dado seu `id`.
-
 ### Iniciar o servidor e configurar o Banco de Dados
 
-Há dois modos de execução, um local e um usando um _Database-as-a-Service_.
+Há dois modos de execução, um local e um usando um _Database-as-a-Service_. Abaixo seguem as instruções para usá-las com ou sem o [Docker](https://docs.docker.com) e [Docker compose](https://docs.docker.com/compose) <small>(opcionalmente)</small>.
 
 #### Sem Docker
 Após instalar as dependências com `yarn`, siga um dos métodos abaixo
@@ -65,15 +55,32 @@ Após instalar as dependências com `yarn`, siga um dos métodos abaixo
       + **`DB_PASSWORD=madmin67`**
 
 #### Com Docker
-Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
+Não precisa baixar o meu repositório do GitHub, pois disponibilizei uma imagem com meu código: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee). Mas, caso queira alterar o código, após baixá-lo, execute os comandos abaixo na raiz do projeto -- onde está o arquivo `docker-compose.yml`:
 
-Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container oficial do MongoDB, contudo, assume-se que o MongoDB está ouvindo na porta **27017**. Caso contrário, será preciso adicionar `-e DB_PORT=<sua_porta>` no comando `[2]` da sequência abaixo ou editar o arquivo `.env` que estará no _container_ após a execução do comando `[3]`
+```bash
+# após instalar as dependências
+docker-compose up --detach # criar e executar os services `db` e `web`
+docker-compose logs -f web # para monitorar os logs do server e a saída do Nodemon
+```
+
+
+Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container com o driver do MongoDB, contudo, assume-se que essa instância está ouvindo a porta **27017**. Caso contrário, será preciso adicionar `-e DB_PORT=<sua_porta>` no comando `[2]` da sequência abaixo ou editar o arquivo `.env` que estará no _container_ após a execução do comando `[3]` <small>(ou do _docker-compose_ acima)</small>
 
 Basta executar o que segue:
 ```bash
 # [1] (opcional) iniciar container com MongoDB
-mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
+mkdir ~/micalevisk_dbdata # os dados do BD serão persistidos neste dir.
+
 docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
+
+# (opcional) consultar o banco manualmente acessando o shell do container
+docker exec -it dbmicalevisk /bin/sh
+## *************** NO SHELL DO CONTAINER
+$ mongo --host localhost:27017
+> use micael-anyee
+> db.livros.find()
+## *************************************
+
 
 # [2] iniciar container para a app
 docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee
@@ -84,19 +91,29 @@ echo -e "DB_PORT=55665\nDB_HOST=ds155665.mlab.com\nDB_NAME=micael-anyee\nDB_USER
 yarn start # iniciar o servidor usando o BD remoto (não requer a execução do passo 1)
 ## ou
 yarn develop # iniciar o servidor usando o BD local (requer a execução do passo 1)
-## ***************
+## *************************************
 
-## (opcional) para acessar o shell do container em outro terminal
+# (opcional) para acessar o shell do container em outro terminal
 docker exec -it servermicalevisk /bin/sh
 
 ## ------- caso queira usar/alterar Dockerfile do meu repo ------- ##
 
-## gerar a imagem, fazer:
+# gerar a imagem
 docker build -t micalevisk/desafio-anyee .
 
-## atualizar no Docker Hub
+# atualizar no Docker Hub
 docker push micalevisk/desafio-anyee
 ```
+
+### Descrição da API
+
+| endpoint | descrição |
+|:---------|:----------|
+**GET** `/api/livros` | Retorna um JSON com todos os livros cadastrados.
+**GET** `/api/livros/{id}` | Retorna um JSON que representa o livro com o id solicitado.
+**POST** `/api/livros` | Dado um número `id` e uma string `nome` no _body_ da requisição, cadastra um novo livro no BD e retorna um JSON indicando sucesso.
+**PUT** `/api/livros/{id}?return_new={false,true}` | Dado um número `id` e/ou uma string `nome` no _body_ da requisição, atualiza o livro identificado por `id` (da URL) e retorna o JSON que o representa. A query string `return_new` é `false` por padrão. Se `true`, o livro atualizado será retornado.
+**DELETE** `/api/livros/{id}` | Retorna um JSON com informações sobre o registro (livro) removido, dado seu `id`.
 
 ### Como consumir a API
 
