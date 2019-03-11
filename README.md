@@ -63,6 +63,28 @@ Após instalar as dependências com `yarn`, siga um dos métodos abaixo
       + **`DB_USERNAME=madmin`**
       + **`DB_PASSWORD=madmin67`**
 
+#### Com Docker
+> - usando um container oficial do MongoDB, ie., a máquina local não precisa instanciar o SGBD
+> - usando a imagem atualizada da app que está no meu repositório **privado** no Docker Hub: [`micalevisk/desafio-anye`](https://cloud.docker.com/repository/registry-1.docker.io/micalevisk/desafio-anyee)
+
+Basta executar o que segue:
+```bash
+# iniciar container com MongoDB
+mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
+docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
+
+# iniciar servidor em modo "production-ready"
+docker run --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
+## ... em modo interativo para a visualização dos logs das requisições
+## basta consumir a API como descrito na seção abaixo
+
+# !!(se não for possível carregar a imagem da nuvem) construir a imagem do servidor
+docker build -t micalevisk/desafio-anyee .
+
+## (opcional) para acessar o terminal do container
+docker exec -it servermicalevisk /bin/sh
+```
+
 ### Como consumir a API
 
 1. usar o [Postman](#postman) ou o [Insomnia](#insomnia)
