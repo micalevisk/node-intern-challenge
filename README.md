@@ -65,11 +65,9 @@ Após instalar as dependências com `yarn`, siga um dos métodos abaixo
       + **`DB_PASSWORD=madmin67`**
 
 #### Com Docker
-Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em:
+Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
 
 Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container oficial do MongoDB, contudo, assume-se que o MongoDB está ouvindo na porta **27017**. Caso contrário, será preciso adicionar `-e DB_POR=<sua_porta>` no comando `[3]` da sequência abaixo.
-
-2. usar a imagem atualizada da app que está no meu repositório no Docker Hub: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
 
 Basta executar o que segue:
 ```bash
