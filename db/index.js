@@ -38,7 +38,7 @@ function connect(strURI) {
     console.log.bind(console, `[MongoDB] connection to DB '${name}' is disconnected`));
 
 
-  function gracefulExit(_signal, exitCode = 0) {
+  function gracefulExit(signal, exitCode = 0) {
     // o estado da conexão deve ser `connected`
     if (mongoose.connection.readyState !== 1) return process.exit(exitCode);
 
@@ -62,8 +62,8 @@ function connect(strURI) {
 
 
 module.exports = {
-  objectMapper: mongoose,
   Schema: mongoose.Schema,
   ModelFactory: mongoose.model,
+  isConnected: () => mongoose.connection.readyState == 1,
   connect: connect.bind(null, URI),
 }

@@ -65,11 +65,9 @@ Após instalar as dependências com `yarn`, siga um dos métodos abaixo
       + **`DB_PASSWORD=madmin67`**
 
 #### Com Docker
-Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em:
+Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
 
-Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container oficial do MongoDB, contudo, assume-se que o MongoDB está ouvindo na porta **27017**. Caso contrário, será preciso adicionar `-e DB_POR=<sua_porta>` no comando `[3]` da sequência abaixo.
-
-2. usar a imagem atualizada da app que está no meu repositório no Docker Hub: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
+Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container oficial do MongoDB, contudo, assume-se que o MongoDB está ouvindo na porta **27017**. Caso contrário, será preciso adicionar `-e DB_PORT=<sua_porta>` no comando `[2]` da sequência abaixo ou editar o arquivo `.env` que estará no _container_ após a execução do comando `[3]`
 
 Basta executar o que segue:
 ```bash
@@ -77,15 +75,27 @@ Basta executar o que segue:
 mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
 docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
 
-# [2] (se existir uma instância local do mongodb) iniciar servidor com o nodemon
-docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee /usr/local/bin/yarn develop
-# [3] (caso contrário) iniciar servidor usando o DB remoto
-docker run -e DB_USERNAME='madmin' -e DB_PASSWORD='madmin67' --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
-## ... em modo interativo para a visualização dos logs das requisições
-## basta consumir a API como descrito na seção abaixo
+# [2] iniciar container para a app
+docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee
+## *************** NO SHELL DO CONTAINER
+# [3] criar arquivo `.env` para configurar o ambiente de production
+echo -e "DB_PORT=55665\nDB_HOST=ds155665.mlab.com\nDB_NAME=micael-anyee\nDB_USERNAME=madmin\nDB_PASSWORD=madmin67" > .env
 
-## (opcional) para acessar o terminal do container
+yarn start # iniciar o servidor usando o BD remoto (não requer a execução do passo 1)
+## ou
+yarn develop # iniciar o servidor usando o BD local (requer a execução do passo 1)
+## ***************
+
+## (opcional) para acessar o shell do container em outro terminal
 docker exec -it servermicalevisk /bin/sh
+
+## ------- caso queira usar/alterar Dockerfile do meu repo ------- ##
+
+## gerar a imagem, fazer:
+docker build -t micalevisk/desafio-anyee .
+
+## atualizar no Docker Hub
+docker push micalevisk/desafio-anyee
 ```
 
 ### Como consumir a API

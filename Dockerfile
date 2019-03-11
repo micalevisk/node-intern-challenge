@@ -16,5 +16,4 @@ COPY . .
 # expor a porta 8080 do container
 EXPOSE 7777
 
-# CMD ["yarn", develop"]
-CMD ["yarn", "start"]
+CMD ["/bin/sh"]
