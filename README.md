@@ -84,9 +84,6 @@ docker run -e DB_USERNAME='madmin' -e DB_PASSWORD='madmin67' --name servermicale
 ## ... em modo interativo para a visualização dos logs das requisições
 ## basta consumir a API como descrito na seção abaixo
 
-# !!(se não for possível carregar a imagem da nuvem) construir a imagem do servidor
-docker build -t micalevisk/desafio-anyee .
-
 ## (opcional) para acessar o terminal do container
 docker exec -it servermicalevisk /bin/sh
 ```
