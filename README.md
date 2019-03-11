@@ -48,18 +48,42 @@ curl -X POST http://localhost:7777/calcs/fib -H 'Content-Type: application/json'
 **DELETE** `/api/livros/{id}` | Retorna um JSON com informações sobre o registro (livro) removido, dado seu `id`.
 
 ### Iniciar o servidor e configurar o Banco de Dados
-Há dois modos de execução, um local e um "_production-ready_" usando um _Database-as-a-Service_
 
-Escolha um dos métodos abaixo:
-* Executar `yarn develop` para usar uma instância local do [**mongodb**](https://www.mongodb.com) (previamente iniciado)
-  1. Altere o arquivo `.env.dev` para definir as variáveis do BD de acordo com o seu ambiente
-* Executar `yarn start` para usar o banco de dados que eu criei e está hospeado no [mLab](https://mlab.com), que está levemente populado
+#### Sem Docker
+Há dois modos de execução, um local e um usando um _Database-as-a-Service_ \
+Após instalar as dependências com `yarn`, siga um dos métodos abaixo
+
+* Executar `yarn develop` para usar uma instância local do [MongoDB](https://www.mongodb.com/download-center)
+  1. Altere o arquivo `.env.dev` para definir as variáveis do BD de acordo com as configurações da sua instância
+* Executar `yarn start` para usar o banco de dados que está hospeado no [mLab](https://mlab.com) (levemente populado)
   1. `cp .env.dev .env` para criar o arquivo `.env` baseado no `.env.dev`
-  2. Altere o arquivo `.env` alterando as seguintes variáveis:
+  2. No arquivo `.env` atualize as variáveis:
       + **`DB_PORT=55665`**
       + **`DB_HOST=ds155665.mlab.com`**
-      + **`DB_USERNAME=madmin`**   (*)
-      + **`DB_PASSWORD=madmin67`** (*)
+      + **`DB_USERNAME=madmin`**
+      + **`DB_PASSWORD=madmin67`**
+
+#### Com Docker
+> - usando um container oficial do MongoDB, ie., a máquina local não precisa instanciar o SGBD
+> - usando a imagem atualizada da app que está no meu repositório **privado** no Docker Hub: [`micalevisk/desafio-anye`](https://cloud.docker.com/repository/registry-1.docker.io/micalevisk/desafio-anyee)
+
+Basta executar o que segue:
+```bash
+# iniciar container com MongoDB
+mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
+docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
+
+# iniciar servidor em modo "production-ready"
+docker run --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
+## ... em modo interativo para a visualização dos logs das requisições
+## basta consumir a API como descrito na seção abaixo
+
+# !!(se não for possível carregar a imagem da nuvem) construir a imagem do servidor
+docker build -t micalevisk/desafio-anyee .
+
+## (opcional) para acessar o terminal do container
+docker exec -it servermicalevisk /bin/sh
+```
 
 ### Como consumir a API
 
