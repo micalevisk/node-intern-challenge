@@ -5,9 +5,10 @@ WORKDIR /usr/app
 
 # copiar os arquivos de dependência
 COPY package*.json ./
+COPY yarn.lock ./
 
 # instalar as dependências do projeto
-RUN npm install
+RUN yarn install
 
 # copiar todos os arquivos na raiz do projeto (vide .dockerignore) para o diretório de trabalho
 COPY . .
@@ -15,5 +16,5 @@ COPY . .
 # expor a porta 8080 do container
 EXPOSE 7777
 
-# CMD ["npm", "run", "develop"]
-CMD ["npm", "start"]
+# CMD ["yarn", develop"]
+CMD ["yarn", "start"]
