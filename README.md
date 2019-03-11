@@ -63,15 +63,24 @@ Escolha um dos métodos abaixo:
 
 ### Como consumir a API
 
-#### Usando o REST Client [Insomnia](https://insomnia.rest/download)
+1. usar o [Postman](#postman) ou o [Insomnia](#insomnia)
+    > Importar um ambiente configurado com os testes para os objetivos do desafio.
+3. usar o [cURL](#curl)
+
+#### <a name="postman"></a> Usando o REST Client [Postman](https://www.getpostman.com/downloads/)
+
+1. Import a _collection_ com a URL abaixo
+    > vá em `Import` e selecione `Import From Link`
+    * https://www.getpostman.com/collections/bf121d24e8a8ecea119f
+
+
+#### <a name="insomnia"></a> Usando o REST Client [Insomnia](https://insomnia.rest/download)
 
 1. Importe o _workspace_ com a URL abaixo:
-  > vá em `workspace` > `Import/Export` > `Import Data` > `From URL`
-  - copiar: https://gist.githubusercontent.com/micalevisk/5d7b51ad4adae64ae405fb893a1f64dd/raw/eb6ddcd1e14cf521a3733caef13dacf3672aa241/Micael-Anyee_2019-03-10.json
+    > vá em `workspace` > `Import/Export` > `Import Data` > `From URL`
+    - https://gist.githubusercontent.com/micalevisk/5d7b51ad4adae64ae405fb893a1f64dd/raw/eb6ddcd1e14cf521a3733caef13dacf3672aa241/Micael-Anyee_2019-03-10.json
 
-2. O ambiente importado já está configurado com os testes para os objetivos do desafio. Bastando editar os parâmetros.
-
-#### Usando o cURL
+#### <a name="curl"></a> Usando o cURL
 Basta seguir a sequência de comandos abaixo _<small>(top-down)</small>_
 
 ```bash

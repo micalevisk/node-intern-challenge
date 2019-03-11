@@ -15,18 +15,5 @@ router.route('/:id')
   .put(livros.updateById)
   .delete(livros.removeById)
 
-/*
-// Middleware para informar em caso de parâmetros inválidos
-router.use((req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors)
-    return res.status(422).json({ errors: errors.array() });
-  }
-
-  next();
-});
-*/
-
 
 module.exports = router;
