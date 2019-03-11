@@ -49,8 +49,9 @@ curl -X POST http://localhost:7777/calcs/fib -H 'Content-Type: application/json'
 
 ### Iniciar o servidor e configurar o Banco de Dados
 
+Há dois modos de execução, um local e um usando um _Database-as-a-Service_.
+
 #### Sem Docker
-Há dois modos de execução, um local e um usando um _Database-as-a-Service_ \
 Após instalar as dependências com `yarn`, siga um dos métodos abaixo
 
 * Executar `yarn develop` para usar uma instância local do [MongoDB](https://www.mongodb.com/download-center)
@@ -64,17 +65,22 @@ Após instalar as dependências com `yarn`, siga um dos métodos abaixo
       + **`DB_PASSWORD=madmin67`**
 
 #### Com Docker
-> - usando um container oficial do MongoDB, ie., a máquina local não precisa instanciar o SGBD
-> - usando a imagem atualizada da app que está no meu repositório **privado** no Docker Hub: [`micalevisk/desafio-anye`](https://cloud.docker.com/repository/registry-1.docker.io/micalevisk/desafio-anyee)
+Não será necessário baixar o meu repositório do GitHub, já que será usado uma imagem disponível em:
+
+Para testar usando uma instância local do `mongodb`, não é preciso iniciar um container oficial do MongoDB, contudo, assume-se que o MongoDB está ouvindo na porta **27017**. Caso contrário, será preciso adicionar `-e DB_POR=<sua_porta>` no comando `[3]` da sequência abaixo.
+
+2. usar a imagem atualizada da app que está no meu repositório no Docker Hub: [`micalevisk/desafio-anye`](https://hub.docker.com/r/micalevisk/desafio-anyee)
 
 Basta executar o que segue:
 ```bash
-# iniciar container com MongoDB
+# [1] (opcional) iniciar container com MongoDB
 mkdir ~/micalevisk_dbdata ## os dados do banco serão armazenados nesse dir.
 docker run --name dbmicalevisk -d -p 27017:27017 -v ~/micalevisk_dbdata:/data/db mongo
 
-# iniciar servidor em modo "production-ready"
-docker run --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
+# [2] (se existir uma instância local do mongodb) iniciar servidor com o nodemon
+docker run --name servermicalevisk -p 7777:7777 --network="host" -it micalevisk/desafio-anyee /usr/local/bin/yarn develop
+# [3] (caso contrário) iniciar servidor usando o DB remoto
+docker run -e DB_USERNAME='madmin' -e DB_PASSWORD='madmin67' --name servermicalevisk -it -p 7777:7777 --network="host" micalevisk/desafio-anyee
 ## ... em modo interativo para a visualização dos logs das requisições
 ## basta consumir a API como descrito na seção abaixo
 
