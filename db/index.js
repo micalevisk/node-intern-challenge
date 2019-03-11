@@ -62,7 +62,6 @@ function connect(strURI) {
 
 
 module.exports = {
-  objectMapper: mongoose,
   Schema: mongoose.Schema,
   ModelFactory: mongoose.model,
   connect: connect.bind(null, URI),
