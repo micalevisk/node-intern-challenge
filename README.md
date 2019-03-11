@@ -109,7 +109,7 @@ Basta seguir a sequência de comandos abaixo _<small>(top-down)</small>_
 
 ```bash
 ## [C]RUD ~ cadastrar um livro
-curl -x POST 'http://localhost:7777/api/livros' -H 'content-type: application/json' -d '{"id": 123,"nome": "Foobar"}'
+curl -X POST 'http://localhost:7777/api/livros' -H 'content-type: application/json' -d '{"id": 123,"nome": "Foobar"}'
 
 ## C[R]UD ~ listar todos os livros cadastrados
 curl -X GET 'http://localhost:7777/api/livros'
