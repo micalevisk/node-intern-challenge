@@ -1,0 +1,25 @@
+version: "3" # versão do compose
+
+services:
+  db:
+    image: mongo:latest
+    container_name: dbmicalevisk
+    ports:
+      - "27017:27017"
+    volumes:
+      - "micalevisk_dbdata:/data/db"
+
+  web:
+    image: micalevisk/desafio-anyee
+    container_name: servermicalevisk
+    build: . # localização do Dockerfile dessa imagem
+    command: yarn develop # usando o nodemon
+    environment:
+     - DB_HOST=db # usar o serviço `db` como host do banco de dados
+    ports:
+      - "7777:7777"
+    volumes:
+      - .:/usr/app # qual dir. será refletido e onde será
+
+volumes:
+  micalevisk_dbdata:
