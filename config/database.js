@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 const REQUIRED_ENV_VAR_NAMES = [
   'DB_USERNAME', // não usado em dev. deixar vazio no arquivo .env.dev
   'DB_PASSWORD', // não usado em dev. deixar vazio no arquivo .env.dev

@@ -1,9 +1,13 @@
 // @ts-check
+/* eslint-disable function-paren-newline */
+/* eslint-disable comma-dangle */
 const path = require('path');
 
 require('dotenv').config({
-  path: path.join(__dirname, '../',
-    process.env.NODE_ENV === 'development' ? '.env.dev' : '.env'),
+  path: path.join(
+    __dirname, '../',
+    process.env.NODE_ENV === 'development' ? '.env.dev' : '.env'
+  ),
 });
 
 const database = require('./database');

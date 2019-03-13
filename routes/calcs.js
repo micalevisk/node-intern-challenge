@@ -7,15 +7,14 @@ const { check, validationResult } = require('express-validator/check');
  * @param {number} n O número alvo da computação.
  * @returns {number} O fatorial de `n`.
  */
-const fat = (function fat() {
-  const valoresComputados = {0:1, 1:1}; // cache
-  return calcFatComMemoizacao;
-
-  function calcFatComMemoizacao(n) {
+const fat = (function fat () {
+  const valoresComputados = {0: 1, 1: 1}; // cache
+  return function calcFatComMemoizacao (n) {
+    // eslint-disable-next-line no-return-assign
     return (valoresComputados[n])
-         ? valoresComputados[n]
-         : valoresComputados[n] = n * calcFatComMemoizacao(n - 1);
-  }
+      ? valoresComputados[n]
+      : valoresComputados[n] = n * calcFatComMemoizacao(n - 1);
+  };
 }());
 
 /**
@@ -25,35 +24,36 @@ const fat = (function fat() {
  * @param {number} n O número alvo da computação.
  * @returns {number} O n-ésimo número da sequência de Fibonacci.
  */
-function fib(n) {
-  let anterior = 0, corrente = 1;
-  for (let i=1; i < n; ++i)
+function fib (n) {
+  let anterior = 0;
+  let corrente = 1;
+
+  for (let i = 1; i < n; i += 1) {
     [
       corrente,
-      anterior
+      anterior,
     ] = [
       corrente + anterior,
-      corrente
+      corrente,
     ];
+  }
 
   return corrente;
 }
 
-//#region [remove] middleware de verificação de parâmetros; válido deixar em um dir. `middlewares`
+// #region [remove] middleware de verificação de parâmetros; válido deixar em um dir. `middlewares`
 const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
-  next();
+  if (errors.isEmpty()) return next();
+  return res.status(422)
+    .json({ errors: errors.array() });
 };
-//#endregion
+// #endregion
 
 router.post('/fat', [
   check('n')
     .isInt({ min: 0, max: 170 })
-    .withMessage(`O número deve ser um natural menor ou igual a 170`),
+    .withMessage('O número deve ser um natural menor ou igual a 170'),
   validateRequest,
 ], (req, res) => {
   const { n } = req.body;
@@ -63,7 +63,7 @@ router.post('/fat', [
 router.post('/fib', [
   check('n')
     .isInt({ min: 0, max: 1476 })
-    .withMessage(`O número deve ser um natural menor ou igual a 1476`),
+    .withMessage('O número deve ser um natural menor ou igual a 1476'),
   validateRequest,
 ], (req, res) => {
   const { n } = req.body;

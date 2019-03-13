@@ -13,7 +13,7 @@ router.route('/')
 router.route('/:id')
   .get(livros.findById)
   .put(livros.updateById)
-  .delete(livros.removeById)
+  .delete(livros.removeById);
 
 
 module.exports = router;

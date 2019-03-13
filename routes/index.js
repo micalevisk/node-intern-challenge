@@ -7,7 +7,7 @@ router.use('/calcs', require('./calcs'));
 // middleware para verificar o estado do BD, que será usada por `/api`
 router.use((req, res, next) => {
   if (isConnected()) return next();
-  throw new Error(`Database is not connected`);
+  throw new Error('Database is not connected');
 });
 
 router.use('/api', require('./api'));

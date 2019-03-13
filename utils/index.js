@@ -13,4 +13,5 @@
  * }
  */
 exports.asyncHandler = fnHandler =>
-  (req, res, next = console.error) => Promise.resolve( fnHandler(req, res) ).catch(next);
+  // eslint-disable-next-line no-console
+  (req, res, next = console.error) => Promise.resolve(fnHandler(req, res)).catch(next);

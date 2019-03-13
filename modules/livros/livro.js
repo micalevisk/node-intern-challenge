@@ -6,13 +6,13 @@ const {
 
 const LivroSchema = new Schema({
 
-  'id': {
+  id: {
     unique: true,
     required: true,
     type: Number,
   },
 
-  'nome': {
+  nome: {
     required: true,
     type: String,
   },
