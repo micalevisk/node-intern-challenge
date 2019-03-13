@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=production node .",
     "develop": "cross-env NODE_ENV=development nodemon .",
     "debug": "cross-env DEBUG=express:* nodemon .",
-    "lint": "eslint . && echo '✔  Your .js files look good.'"
+    "lint": "eslint . && echo '✔  Your .js files look good.'",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
